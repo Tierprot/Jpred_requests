@@ -1,0 +1,7 @@
+download_dir = 'downloads'
+in_action_deq_size = 100
+pause = 0.5
+positions = [20]
+vocabulary = []
+radius = 5
+inp = 'input.txt'

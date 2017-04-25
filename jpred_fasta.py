@@ -16,7 +16,12 @@ if __name__ == '__main__':
     config = open('config.txt').read()
     exec (config)
 
-    names = os.listdir(os.path.join(os.getcwd(), download_dir))
+    try:
+        names = os.listdir(os.path.join(os.getcwd(), download_dir))
+    except FileNotFoundError as exp:
+        os.mkdir(os.path.join(os.getcwd(), download_dir))
+        names=[]
+
     names = [name.split('.tar')[0] for name in names]
     seqs = {}
 

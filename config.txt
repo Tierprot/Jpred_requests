@@ -1,7 +1,8 @@
 download_dir = 'downloads'
 in_action_deq_size = 100
 pause = 0.5
-positions = [20]
-vocabulary = []
+positions = [1,2,6,50,57,78,150,151]
+vocabulary = ['A','G','H']
 radius = 5
 inp = 'input.txt'
+chunks = None

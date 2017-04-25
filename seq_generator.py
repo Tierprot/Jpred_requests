@@ -5,7 +5,7 @@ class MutGen():
     AA_voc = ["G", "A", "V", "L", "I", "P", "F", "Y", "W", "S",
               "T", "C", "M", "N", "Q", "K", "R", "H", "D", "E"]
 
-    def __init__(self, input_file, positions=None, vocabulary=None):
+    def __init__(self, input_file, positions=None, vocabulary=None, chunkSize=None):
         try:
             main_name, main_sequence = MutGen.load_seq(input_file)
             self.main_name = main_name
@@ -13,12 +13,17 @@ class MutGen():
         except Exception as exp:
             print(exp)
 
+        # if one needs a collection of peptides which have a mutation instead of whole protein
+        # chunkSize - size of such peptides
+        self.chunkSize = chunkSize
+
         # restricting AA mutation variations
         if vocabulary:
             self.AA_voc = vocabulary
         # restriction of positions to mutate
         if positions:
             self.positions = positions
+
         else:
             main_name = ''.join(list(self.sequences.keys()))
             self.positions = list(range(len(self.sequences[main_name])))
@@ -39,17 +44,20 @@ class MutGen():
 
     def gen_mut(self):
         # generation of provided mutations
-        try:
-            for position in self.positions:
-                for mutation in self.AA_voc:
-                    if mutation != self.sequences[self.main_name][position]:
-                        name = self.main_name + '_' + str(position) + self.sequences[self.main_name][position] \
-                                + '_to_' + str(position) + mutation
-                        seq = self.sequences[self.main_name]
-                        seq = seq[:position] + mutation + seq[position+1:]
-                        self.sequences.update({name: seq})
-        except Exception as exp:
-            print(exp)
+        if self.chunkSize:
+            pass
+        else:
+            try:
+                for position in self.positions:
+                    for mutation in self.AA_voc:
+                        if mutation != self.sequences[self.main_name][position]:
+                            name = self.main_name + '_' + str(position) + self.sequences[self.main_name][position] \
+                                    + '_to_' + str(position) + mutation
+                            seq = self.sequences[self.main_name]
+                            seq = seq[:position] + mutation + seq[position+1:]
+                            self.sequences.update({name: seq})
+            except Exception as exp:
+                print(exp)
 
     def get_titles(self):
         try:

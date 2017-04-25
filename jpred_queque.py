@@ -20,7 +20,8 @@ if __name__ == '__main__':
 
     config = open('config.txt').read()
     exec(config)
-    mutations = MutGen('input.txt', positions=positions, vocabulary=vocabulary)
+
+    mutations = MutGen('input.txt', positions=positions, vocabulary=vocabulary, chunkSize=chunks)
     mutations.gen_mut()
     mutations.save_fasta()
 
